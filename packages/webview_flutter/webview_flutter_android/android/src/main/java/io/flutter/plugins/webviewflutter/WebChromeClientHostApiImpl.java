@@ -120,6 +120,15 @@ public class WebChromeClientHostApiImpl implements WebChromeClientHostApi {
 
     @Override
     public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
+      if (Build.VERSION.SDK_INT >= 23) {
+        int checkPermission = ContextCompat.checkSelfPermission(WebViewFlutterPlugin.activity, Manifest.permission.ACCESS_COARSE_LOCATION);
+        if (checkPermission != PackageManager.PERMISSION_GRANTED) {
+          ActivityCompat.requestPermissions(WebViewFlutterPlugin.activity,
+                  new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION},
+                  REQUEST_LOCATION);
+          System.out.println("banana");
+        }
+      }
       callback.invoke(origin, true, false);
       super.onGeolocationPermissionsShowPrompt(origin, callback);
     }
