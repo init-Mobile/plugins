@@ -77,6 +77,7 @@ class WebSettings {
   ///
   /// The `userAgent` parameter must not be null.
   WebSettings({
+    this.geolocationEnabled,
     this.javascriptMode,
     this.hasNavigationDelegate,
     this.hasProgressTracking,
@@ -89,6 +90,9 @@ class WebSettings {
 
   /// The JavaScript execution mode to be used by the webview.
   final JavascriptMode? javascriptMode;
+
+  /// The JavaScript execution mode to be used by the webview.
+  final bool? geolocationEnabled;
 
   /// Whether the [WebView] has a [NavigationDelegate] set.
   final bool? hasNavigationDelegate;
@@ -127,6 +131,6 @@ class WebSettings {
 
   @override
   String toString() {
-    return 'WebSettings(javascriptMode: $javascriptMode, hasNavigationDelegate: $hasNavigationDelegate, hasProgressTracking: $hasProgressTracking, debuggingEnabled: $debuggingEnabled, gestureNavigationEnabled: $gestureNavigationEnabled, userAgent: $userAgent, allowsInlineMediaPlayback: $allowsInlineMediaPlayback)';
+    return 'WebSettings(javascriptMode: $javascriptMode, geolocationEnabled: $geolocationEnabled,  hasNavigationDelegate: $hasNavigationDelegate, hasProgressTracking: $hasProgressTracking, debuggingEnabled: $debuggingEnabled, gestureNavigationEnabled: $gestureNavigationEnabled, userAgent: $userAgent, allowsInlineMediaPlayback: $allowsInlineMediaPlayback)';
   }
 }

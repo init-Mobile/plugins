@@ -84,6 +84,7 @@ class WebView extends StatefulWidget {
     this.initialUrl,
     this.initialCookies = const <WebViewCookie>[],
     this.javascriptMode = JavascriptMode.disabled,
+    this.geolocationEnabled,
     this.javascriptChannels,
     this.navigationDelegate,
     this.gestureRecognizers,
@@ -159,6 +160,9 @@ class WebView extends StatefulWidget {
 
   /// Whether JavaScript execution is enabled.
   final JavascriptMode javascriptMode;
+
+  /// Whether JavaScript execution is enabled.
+  final bool? geolocationEnabled;
 
   /// The set of [JavascriptChannel]s available to JavaScript code running in the web view.
   ///
@@ -379,6 +383,7 @@ CreationParams _creationParamsfromWidget(WebView widget) {
 WebSettings _webSettingsFromWidget(WebView widget) {
   return WebSettings(
     javascriptMode: widget.javascriptMode,
+    geolocationEnabled: widget.geolocationEnabled,
     hasNavigationDelegate: widget.navigationDelegate != null,
     hasProgressTracking: widget.onProgress != null,
     debuggingEnabled: widget.debuggingEnabled,

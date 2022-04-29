@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.annotation.VisibleForTesting;
 import io.flutter.plugins.webviewflutter.GeneratedAndroidWebView.WebChromeClientHostApi;
+import android.webkit.GeolocationPermissions;
 
 /**
  * Host api implementation for {@link WebChromeClient}.
@@ -115,6 +116,12 @@ public class WebChromeClientHostApiImpl implements WebChromeClientHostApi {
      */
     public void setWebViewClient(WebViewClient webViewClient) {
       this.webViewClient = webViewClient;
+    }
+
+    @Override
+    public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
+      callback.invoke(origin, true, false);
+      super.onGeolocationPermissionsShowPrompt(origin, callback);
     }
 
     @Override
