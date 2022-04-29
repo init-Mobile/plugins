@@ -4,6 +4,11 @@
 
 package io.flutter.plugins.webviewflutter;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Build;
 import android.os.Message;
 import android.webkit.WebChromeClient;
