@@ -9,7 +9,6 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.os.Build;
 import android.os.Message;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
@@ -31,7 +30,7 @@ public class WebChromeClientHostApiImpl implements WebChromeClientHostApi {
   private final InstanceManager instanceManager;
   private final WebChromeClientCreator webChromeClientCreator;
   private final WebChromeClientFlutterApiImpl flutterApi;
-
+  private static final int REQUEST_LOCATION = 100;
   /**
    * Implementation of {@link WebChromeClient} that passes arguments of callback methods to Dart.
    */
@@ -131,7 +130,6 @@ public class WebChromeClientHostApiImpl implements WebChromeClientHostApi {
           ActivityCompat.requestPermissions(WebViewFlutterPlugin.activity,
                   new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION},
                   REQUEST_LOCATION);
-          System.out.println("banana");
         }
       }
       callback.invoke(origin, true, false);
