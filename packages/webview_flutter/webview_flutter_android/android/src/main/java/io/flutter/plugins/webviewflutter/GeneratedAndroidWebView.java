@@ -1356,6 +1356,8 @@ public class GeneratedAndroidWebView {
 
     void setJavaScriptEnabled(@NonNull Long instanceId, @NonNull Boolean flag);
 
+    void setGeolocationEnabled(@NonNull Long instanceId, @NonNull Boolean flag);
+
     void setUserAgentString(@NonNull Long instanceId, @Nullable String userAgentString);
 
     void setMediaPlaybackRequiresUserGesture(@NonNull Long instanceId, @NonNull Boolean require);
@@ -1529,6 +1531,38 @@ public class GeneratedAndroidWebView {
                 }
                 reply.reply(wrapped);
               });
+        } else {
+          channel.setMessageHandler(null);
+        }
+      }
+      {
+        BasicMessageChannel<Object> channel =
+                new BasicMessageChannel<>(
+                        binaryMessenger,
+                        "dev.flutter.pigeon.WebSettingsHostApi.setGeolocationEnabled",
+                        getCodec());
+        if (api != null) {
+          channel.setMessageHandler(
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      Boolean flagArg = (Boolean) args.get(1);
+                      if (flagArg == null) {
+                        throw new NullPointerException("flagArg unexpectedly null.");
+                      }
+                      api.setGeolocationEnabled(
+                              (instanceIdArg == null) ? null : instanceIdArg.longValue(), flagArg);
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }

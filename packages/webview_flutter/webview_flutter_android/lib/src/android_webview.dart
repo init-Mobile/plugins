@@ -521,6 +521,13 @@ class WebSettings extends JavaObject {
     return api.setJavaScriptEnabledFromInstance(this, flag);
   }
 
+  /// Tells the WebView to enable GeoLocation.
+  ///
+  /// The default is false.
+  Future<void> setGeolocationEnabled(bool flag) {
+    return api.setGeolocationEnabledFromInstance(this, flag);
+  }
+
   /// Sets the WebView's user-agent string.
   ///
   /// If the string is empty, the system default value will be used. Note that

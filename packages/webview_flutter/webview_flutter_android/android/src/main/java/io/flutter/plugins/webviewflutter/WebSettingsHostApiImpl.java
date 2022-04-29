@@ -79,6 +79,12 @@ public class WebSettingsHostApiImpl implements WebSettingsHostApi {
   }
 
   @Override
+  public void setGeolocationEnabled(Long instanceId, Boolean flag) {
+    final WebSettings webSettings = (WebSettings) instanceManager.getInstance(instanceId);
+    webSettings.setGeolocationEnabled(flag);
+  }
+
+  @Override
   public void setUserAgentString(Long instanceId, String userAgentString) {
     final WebSettings webSettings = (WebSettings) instanceManager.getInstance(instanceId);
     webSettings.setUserAgentString(userAgentString);
