@@ -156,9 +156,9 @@ public class WebViewFlutterPlugin implements FlutterPlugin, ActivityAware{
     activityPluginBinding.addRequestPermissionsResultListener(new PluginRegistry.RequestPermissionsResultListener() {
       @Override
       public boolean onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-            if (webChromeClientHostApi != null){
-              return webChromeClientHostApi.requestPermissionsResult(requestCode, permissions, grantResults);
-            }
+//            if (webChromeClientHostApi != null){
+//              return webChromeClientHostApi.requestPermissionsResult(requestCode, permissions, grantResults);
+//            }
             return false;
           }
     });
