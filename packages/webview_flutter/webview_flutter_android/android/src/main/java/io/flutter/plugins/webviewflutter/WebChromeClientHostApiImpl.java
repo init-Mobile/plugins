@@ -174,6 +174,10 @@ public class WebChromeClientHostApiImpl implements WebChromeClientHostApi {
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback,
                                      FileChooserParams fileChooserParams) {
+//      MainActivity.current().getStateListener().launch((resultCode, data)
+//                      -> uploadMsg.onReceiveValue(new Uri[]{data.getData()})
+//              , fileChooserParams.createIntent());
+
 //      for (String s: fileChooserParams.getAcceptTypes()) {
 //        //Do your stuff here
 //        Log.d("TEST BLUB", "Blub s="+s);
