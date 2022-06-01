@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Message;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
+import android.webkit.PermissionRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import androidx.annotation.NonNull;
