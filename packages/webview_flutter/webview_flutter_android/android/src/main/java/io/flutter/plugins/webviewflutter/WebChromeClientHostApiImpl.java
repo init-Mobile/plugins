@@ -136,7 +136,10 @@ public class WebChromeClientHostApiImpl implements WebChromeClientHostApi {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback,
                                      FileChooserParams fileChooserParams) {
-      return super.onShowFileChooser(webView, filePathCallback, fileChooserParams);
+      MainActivity.current().getStateListener().launch((resultCode, data)
+                      -> uploadMsg.onReceiveValue(new Uri[]{data.getData()})
+              , fileChooserParams.createIntent());
+      return true;
     }
 
     @Override
