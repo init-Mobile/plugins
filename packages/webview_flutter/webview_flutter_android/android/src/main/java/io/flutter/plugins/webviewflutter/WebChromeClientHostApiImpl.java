@@ -27,7 +27,6 @@ import android.webkit.GeolocationPermissions;
 import android.util.Log;
 import android.annotation.TargetApi;
 import android.content.Intent;
-import androidx.activity.result.ActivityResult;
 import android.app.Activity;
 import android.content.ClipData;
 
