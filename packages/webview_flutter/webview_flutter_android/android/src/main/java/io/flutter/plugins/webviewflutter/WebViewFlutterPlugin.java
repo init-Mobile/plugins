@@ -114,6 +114,12 @@ public class WebViewFlutterPlugin implements FlutterPlugin, ActivityAware{
             instanceManager,
             new WebViewClientHostApiImpl.WebViewClientCreator(),
             new WebViewClientFlutterApiImpl(binaryMessenger, instanceManager)));
+
+    webChromeClientHostApi = new WebChromeClientHostApiImpl(
+            instanceManager,
+            new WebChromeClientHostApiImpl.WebChromeClientCreator(),
+            new WebChromeClientFlutterApiImpl(binaryMessenger, instanceManager));
+    WebChromeClientHostApi.setup(binaryMessenger, webChromeClientHostApi);
     WebChromeClientHostApi.setup(
         binaryMessenger,
         new WebChromeClientHostApiImpl(
@@ -168,6 +174,16 @@ public class WebViewFlutterPlugin implements FlutterPlugin, ActivityAware{
 //            }
             return false;
           }
+    });
+
+    activityPluginBinding.addActivityResultListener(new PluginRegistry.ActivityResultListener() {
+      @Override
+      public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (webChromeClientHostApi != null){
+          return webChromeClientHostApi.activityResult(requestCode, resultCode, data);
+        }
+        return false;
+      }
     });
   }
 

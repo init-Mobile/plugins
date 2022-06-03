@@ -24,6 +24,14 @@ import androidx.annotation.VisibleForTesting;
 import io.flutter.plugins.webviewflutter.GeneratedAndroidWebView.WebChromeClientHostApi;
 import android.webkit.GeolocationPermissions;
 
+import android.util.Log;
+import android.annotation.TargetApi;
+import android.content.Intent;
+import androidx.activity.result.ActivityResult;
+import android.app.Activity;
+import android.content.ClipData;
+import androidx.appcompat.app.AlertDialog;
+
 /**
  * Host api implementation for {@link WebChromeClient}.
  *
@@ -34,6 +42,43 @@ public class WebChromeClientHostApiImpl implements WebChromeClientHostApi {
   private final WebChromeClientCreator webChromeClientCreator;
   private final WebChromeClientFlutterApiImpl flutterApi;
   private static final int REQUEST_LOCATION = 100;
+
+  private static ValueCallback<Uri[]> uploadCallBack;
+  private final static int FILECHOOSER_RESULTCODE=200;
+  public static final int RESULT_OK = -1;
+
+  public boolean activityResult(int requestCode, int resultCode, Intent data) {
+    Uri result = null;
+    onActivityResultAboveL(requestCode, resultCode, data);
+    return false;
+  }
+
+  private void onActivityResultAboveL(int requestCode, int resultCode, Intent intent) {
+    if (requestCode != FILECHOOSER_RESULTCODE) {
+      return;
+    }
+    Uri[] results = null;
+
+    if (requestCode == FILECHOOSER_RESULTCODE && resultCode == Activity.RESULT_OK) {
+      if (intent != null) {
+        String dataString = intent.getDataString();
+        ClipData clipData = intent.getClipData();
+        if (clipData != null) {
+          results = new Uri[clipData.getItemCount()];
+          for (int i = 0; i < clipData.getItemCount(); i++) {
+            ClipData.Item item = clipData.getItemAt(i);
+            results[i] = item.getUri();
+          }
+        }
+        if (dataString != null) {
+          results = new Uri[]{Uri.parse(dataString)};
+        }
+      }
+    }
+    uploadCallBack.onReceiveValue(results);
+    uploadCallBack = null;
+  }
+
   /**
    * Implementation of {@link WebChromeClient} that passes arguments of callback methods to Dart.
    */
@@ -126,19 +171,23 @@ public class WebChromeClientHostApiImpl implements WebChromeClientHostApi {
     }
 
     @Override
-    public void onPermissionRequest(final PermissionRequest request) {
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-        request.grant(request.getResources());
-      }
-    }
-
-    @Override
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback,
                                      FileChooserParams fileChooserParams) {
-      MainActivity.current().getStateListener().launch((resultCode, data)
-                      -> uploadMsg.onReceiveValue(new Uri[]{data.getData()})
-              , fileChooserParams.createIntent());
+//      for (String s: fileChooserParams.getAcceptTypes()) {
+//        //Do your stuff here
+//        Log.d("TEST BLUB", "Blub s="+s);
+//      }
+
+      uploadCallBack = filePathCallback;
+
+      String[] mimeTypes = {"image/*", "application/pdf"};
+      Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+      intent.addCategory(Intent.CATEGORY_OPENABLE);
+      intent.setType("*/*"); // TAKE_PICTURE?
+      intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+      WebViewFlutterPlugin.activity.startActivityForResult(intent, FILECHOOSER_RESULTCODE);
+
       return true;
     }
 
