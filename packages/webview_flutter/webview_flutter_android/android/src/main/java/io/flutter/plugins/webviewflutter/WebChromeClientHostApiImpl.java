@@ -30,7 +30,6 @@ import android.content.Intent;
 import androidx.activity.result.ActivityResult;
 import android.app.Activity;
 import android.content.ClipData;
-import androidx.appcompat.app.AlertDialog;
 
 /**
  * Host api implementation for {@link WebChromeClient}.
