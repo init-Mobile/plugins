@@ -413,7 +413,7 @@ class WebSettingsHostApiImpl extends WebSettingsHostApi {
       bool flag,
       ) {
     return setGeolocationEnabled(
-      instanceManager.getInstanceId(instance)!,
+      instanceManager.getIdentifier(instance)!,
       flag,
     );
   }
